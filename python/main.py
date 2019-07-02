@@ -127,14 +127,14 @@ def PrettyMove(move):
 class MainHandler(webapp2.RequestHandler):
     # Handling GET request, just for debugging purposes.
     # If you open this handler directly, it will show you the
-    # HTML form here and let you copy-paste some game's JSON
+    # HTML form here and let you copy-paste some game's JSONFF
     # here for testing.
     def get(self):
         if not self.request.get('json'):
           self.response.write("""
 <body><form method=get>
 Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
-<p/><input type=submit>
+<p/><input type=submit>F
 </form>
 </body>
 """)
@@ -149,7 +149,6 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
         # Do the picking of a move and print the result.
         self.pickMove(g)
 
-
     def pickMove(self, g):
     	# Gets all valid moves.
     	valid_moves = g.ValidMoves()
@@ -157,12 +156,41 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
     		# Passes if no valid moves.
     		self.response.write("PASS")
     	else:
+    		move=pickSumi(valid_moves)
+
+
+    			
+
     		# Chooses a valid move randomly if available.
                 # TO STEP STUDENTS:
                 # You'll probably want to change how this works, to do something
                 # more clever than just picking a random move.
-	    	move = random.choice(valid_moves)
+
     		self.response.write(PrettyMove(move))
+
+
+    def pickSumi(valid_moves):
+    	for a_move in valid_moves:
+    		list_sumi=[[1,8],[1,1],[8,8],[8,1]]
+    		for place in list_sumi:
+    			if a_move["Where"]=place:
+    				move=place
+    				return move
+    	move = random.choice(valid_moves)
+    	return move
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
