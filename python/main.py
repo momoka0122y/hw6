@@ -150,6 +150,26 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
         self.pickMove(g)
 
 
+
+
+
+
+
+
+    def pickSumi(self, valid_moves):
+    	for a_move in valid_moves:
+    		list_sumi=[[1,8],[1,1],[8,8],[8,1]]
+    		for place in list_sumi:
+    			if a_move["Where"]==place:
+    				move=a_move
+    				return move
+    	move = random.choice(valid_moves)
+    	return move
+
+
+
+
+
     def pickMove(self, g):
     	# Gets all valid moves.
     	valid_moves = g.ValidMoves()
@@ -157,12 +177,18 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
     		# Passes if no valid moves.
     		self.response.write("PASS")
     	else:
-    		# Chooses a valid move randomly if available.
-                # TO STEP STUDENTS:
-                # You'll probably want to change how this works, to do something
-                # more clever than just picking a random move.
-	    	move = random.choice(valid_moves)
+    		move=self.pickSumi(valid_moves)
     		self.response.write(PrettyMove(move))
+
+
+
+
+
+
+
+
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
